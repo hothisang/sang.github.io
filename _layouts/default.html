@@ -99,6 +99,7 @@ footer{
   </nav>
 </header>
 
+<aside id="sidebar"></aside>
 <main class="markdown-body">
 {{ content }}
 </main>
@@ -106,6 +107,29 @@ footer{
 <footer>
 © {{ site.time | date: "%Y" }} {{ site.title }}
 </footer>
-
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+  
+    const sidebar = document.getElementById("sidebar");
+    const headings = document.querySelectorAll(".markdown-body h1, .markdown-body h2, .markdown-body h3");
+  
+    headings.forEach((heading, index) => {
+  
+      if(!heading.id){
+        heading.id = "heading-" + index;
+      }
+  
+      const link = document.createElement("a");
+      link.href = "#" + heading.id;
+      link.textContent = heading.textContent;
+  
+      if(heading.tagName === "H2") link.classList.add("toc-h2");
+      if(heading.tagName === "H3") link.classList.add("toc-h3");
+  
+      sidebar.appendChild(link);
+    });
+  
+  });
+</script>
 </body>
 </html>
